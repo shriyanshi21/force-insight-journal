@@ -1,162 +1,83 @@
 
-import React, { useState } from "react";
+import React from "react";
 import AppLayout from "@/components/layout/AppLayout";
-import { 
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger 
-} from "@/components/ui/accordion";
-import { 
-  LightbulbIcon,
-  BarChart2,
-  Users,
-  MoonStar
-} from "lucide-react";
+import { Calendar } from "lucide-react";
 
 const InsightsPage: React.FC = () => {
   // Sample analysis data (this would come from your AI backend in a real app)
   const emotionData = [
-    { emotion: "serenity", percentage: 92, color: "bg-blue-100 text-blue-700" },
-    { emotion: "mindfulness", percentage: 90, color: "bg-indigo-100 text-indigo-700" },
+    { emotion: "disappointment", percentage: 19, color: "bg-blue-100 text-blue-700" },
+    { emotion: "enthusiasm", percentage: 13, color: "bg-amber-100 text-amber-700" },
+    { emotion: "sadness", percentage: 13, color: "bg-blue-100 text-blue-700" },
   ];
   
-  const focusData = [
-    { focus: "family bonds", percentage: 94, color: "bg-amber-100 text-amber-700" },
-    { focus: "cultural connection", percentage: 90, color: "bg-rose-100 text-rose-700" },
-  ];
-
+  const keywords = ["growth", "vulnerability", "uncertainty"];
+  
   return (
     <AppLayout className="p-6">
-      <div className="max-w-3xl mx-auto">
+      <div className="max-w-5xl mx-auto">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6">My Insights</h1>
         
-        {/* Analysis Summary Card */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="summary" className="border-0">
-              <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                <div className="flex items-center">
-                  <LightbulbIcon className="h-6 w-6 text-force-purple mr-3" />
-                  <span className="text-xl font-semibold">Analysis Summary</span>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6">
-                <div className="space-y-4 text-gray-700">
-                  <p>
-                    Based on your voice note from Nainital, your emotional state shows exceptionally high 
-                    levels of serenity (92%) and mindfulness (90%). This correlates strongly with your 
-                    mentions of nature, the lake, and taking time at your own pace.
-                  </p>
-                  <p>
-                    Your energy is primarily focused on family bonds (94%) and cultural connection (90%), 
-                    reflecting the importance of traveling with your mother and reconnecting with India.
-                  </p>
-                  <p>
-                    There's a noticeable pattern of finding balance between calm reflection and planned 
-                    activities, suggesting this balance is currently serving your well-being effectively.
-                  </p>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-2xl font-medium text-gray-800">My reflections</h2>
+            <span className="text-gray-500 flex items-center gap-2">
+              <Calendar className="h-4 w-4" />
+              LAST WEEK... DEC 7 - DEC 14
+            </span>
+          </div>
+          
+          {/* Emotions Section */}
+          <div className="grid grid-cols-3 gap-4 mb-6">
+            {emotionData.map((item) => (
+              <div key={item.emotion} className={`${item.color} rounded-lg p-4`}>
+                <div className="text-4xl font-bold">{item.percentage}%</div>
+                <div className="text-sm">{item.emotion}</div>
+              </div>
+            ))}
+          </div>
+          
+          {/* Analysis Text */}
+          <div className="bg-gray-50 rounded-lg p-6 mb-6">
+            <p className="text-gray-700">
+              You're navigating complex emotions surrounding work, relationships, and personal growth. 
+              Your introspection reveals a desire for stability and connection, yet you're wrestling 
+              with fears about potential changes and the pain of a past relationship. Despite these 
+              challenges, you're showing resilience and self-awareness, recognizing the need for 
+              personal development and independence.
+            </p>
+          </div>
+          
+          {/* Keywords */}
+          <div className="flex gap-4">
+            {keywords.map((keyword) => (
+              <span key={keyword} className="text-gray-600">
+                {keyword}
+              </span>
+            ))}
+          </div>
         </div>
-
-        {/* Key Growth Insights */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="growth" className="border-0">
-              <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                <div className="flex items-center">
-                  <BarChart2 className="h-6 w-6 text-force-purple mr-3" />
-                  <span className="text-xl font-semibold">Key Growth Insights</span>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6">
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    {emotionData.map((item) => (
-                      <div key={item.emotion} className={`${item.color} rounded-lg p-4`}>
-                        <div className="text-3xl font-bold">{item.percentage}%</div>
-                        <div className="text-sm capitalize">{item.emotion}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-gray-700">
-                    Your journal shows significant growth in mindfulness practices and a heightened sense of serenity
-                    compared to your previous entries. Continue leveraging these strengths.
-                  </p>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-        {/* Connection Patterns */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="connections" className="border-0">
-              <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                <div className="flex items-center">
-                  <Users className="h-6 w-6 text-force-purple mr-3" />
-                  <span className="text-xl font-semibold">Connection Patterns</span>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6">
-                <div className="space-y-4">
-                  <div className="grid grid-cols-2 gap-4">
-                    {focusData.map((item) => (
-                      <div key={item.focus} className={`${item.color} rounded-lg p-4`}>
-                        <div className="text-3xl font-bold">{item.percentage}%</div>
-                        <div className="text-sm capitalize">{item.focus}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <p className="text-gray-700">
-                    Your entries show strong emphasis on family relationships and cultural identity.
-                    These connections are providing you with stability and purpose during your travels.
-                  </p>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-        {/* Suggested Focus Areas */}
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 mb-4">
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="focus" className="border-0">
-              <AccordionTrigger className="px-6 py-4 hover:no-underline">
-                <div className="flex items-center">
-                  <MoonStar className="h-6 w-6 text-force-purple mr-3" />
-                  <span className="text-xl font-semibold">Suggested Focus Areas</span>
-                </div>
-              </AccordionTrigger>
-              <AccordionContent className="px-6 pb-6">
-                <div className="space-y-4">
-                  <p className="text-gray-700">
-                    Based on your patterns, consider focusing on:
-                  </p>
-                  <ul className="list-disc pl-5 space-y-2 text-gray-700">
-                    <li>Maintaining daily mindfulness practices</li>
-                    <li>Documenting cultural observations</li>
-                    <li>Planning family activities that deepen connections</li>
-                  </ul>
-                </div>
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </div>
-
-        {/* Force Insight Box */}
-        <div className="bg-blue-50 rounded-xl p-6 border border-blue-100">
-          <h2 className="text-xl font-semibold text-force-purple mb-4">Force Insight</h2>
-          <p className="text-force-purple">
-            Your entry reveals a deep appreciation for slowing down and embracing cultural roots. To
-            build on this growth moment, consider scheduling 10 minutes each morning for mindful
-            observation, similar to your lake-watching experience. This could help maintain the
-            serenity you've discovered even after returning to your regular routine.
-          </p>
+        
+        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+          <div className="flex items-center mb-4">
+            <h2 className="text-4xl font-bold text-gray-800">7</h2>
+            <div className="ml-4">
+              <div className="text-xl font-medium">Moments saved</div>
+              <div className="text-gray-500">in the last week</div>
+            </div>
+          </div>
+          
+          <div className="mt-8">
+            <h3 className="text-lg font-medium text-gray-500 uppercase mb-4">Notes to self</h3>
+            <ul className="space-y-2">
+              <li className="bg-gray-50 p-4 rounded-lg">
+                Own everything at work
+              </li>
+              <li className="border border-dashed border-gray-200 p-4 rounded-lg text-gray-400">
+                Add another note...
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
     </AppLayout>

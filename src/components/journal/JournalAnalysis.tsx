@@ -4,9 +4,6 @@ import { Calendar } from "@/components/ui/calendar";
 import { Button } from "@/components/ui/button";
 import { toast } from "sonner";
 import { DateRange } from "react-day-picker";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { BarChart2, Calendar as CalendarIcon, ChevronRight } from "lucide-react";
-import { cn } from "@/lib/utils";
 
 interface JournalAnalysisProps {
   className?: string;
@@ -17,7 +14,6 @@ const JournalAnalysis: React.FC<JournalAnalysisProps> = ({ className }) => {
     from: new Date(),
     to: new Date(),
   });
-  const [analysisType, setAnalysisType] = useState<'emotions' | 'topics' | 'patterns'>('emotions');
 
   const handleAnalyze = () => {
     if (!dateRange?.from || !dateRange?.to) {
@@ -29,93 +25,35 @@ const JournalAnalysis: React.FC<JournalAnalysisProps> = ({ className }) => {
   };
 
   return (
-    <Card className={cn("border border-gray-100", className)}>
-      <CardHeader className="pb-3">
-        <CardTitle className="text-lg font-medium text-gray-800">Journal Analysis</CardTitle>
-        <CardDescription>Gain insights from your journal entries</CardDescription>
-      </CardHeader>
+    <div className={cn("bg-white rounded-xl shadow-sm border border-gray-100 p-6", className)}>
+      <h3 className="text-lg font-medium text-gray-800 mb-4">Analyze Your Journals</h3>
       
-      <CardContent>
-        <div className="space-y-4">
-          <div>
-            <label className="text-sm font-medium mb-2 block">Analysis Type</label>
-            <div className="grid grid-cols-3 gap-2">
-              <Button 
-                variant={analysisType === 'emotions' ? 'default' : 'outline'} 
-                onClick={() => setAnalysisType('emotions')}
-                className={analysisType === 'emotions' ? 'bg-force-purple hover:bg-force-vivid-purple' : ''}
-                size="sm"
-              >
-                Emotions
-              </Button>
-              <Button 
-                variant={analysisType === 'topics' ? 'default' : 'outline'} 
-                onClick={() => setAnalysisType('topics')}
-                className={analysisType === 'topics' ? 'bg-force-purple hover:bg-force-vivid-purple' : ''}
-                size="sm"
-              >
-                Topics
-              </Button>
-              <Button 
-                variant={analysisType === 'patterns' ? 'default' : 'outline'} 
-                onClick={() => setAnalysisType('patterns')}
-                className={analysisType === 'patterns' ? 'bg-force-purple hover:bg-force-vivid-purple' : ''}
-                size="sm"
-              >
-                Patterns
-              </Button>
-            </div>
-          </div>
-          
-          <div>
-            <label className="text-sm font-medium mb-2 block">Date Range</label>
-            <div className="rounded-md border p-2">
-              <Calendar
-                mode="range"
-                selected={dateRange}
-                onSelect={setDateRange}
-                numberOfMonths={1}
-                className="mx-auto"
-              />
-            </div>
-          </div>
-          
-          <div className="bg-force-soft-purple p-3 rounded-md">
-            <div className="flex items-center gap-2 text-force-purple text-sm font-medium">
-              <CalendarIcon className="h-4 w-4" />
-              <span>
-                {dateRange?.from && dateRange?.to ? (
-                  <>
-                    {dateRange.from.toLocaleDateString()} to {dateRange.to.toLocaleDateString()}
-                  </>
-                ) : (
-                  "Select date range"
-                )}
-              </span>
-            </div>
-          </div>
-        </div>
-      </CardContent>
+      <div className="mb-4">
+        <p className="text-sm text-gray-500 mb-2">Select a date range for analysis:</p>
+        <Calendar
+          mode="range"
+          selected={dateRange}
+          onSelect={setDateRange}
+          numberOfMonths={1}
+          className="rounded-md border"
+        />
+      </div>
       
-      <CardFooter className="flex flex-col gap-3 pt-0">
+      <div className="flex flex-col gap-2">
         <Button 
           onClick={handleAnalyze} 
-          className="w-full bg-force-purple hover:bg-force-vivid-purple"
+          className="bg-force-purple hover:bg-force-vivid-purple text-white"
         >
-          <BarChart2 className="mr-2 h-4 w-4" />
           Run Analysis
         </Button>
-        
-        <Button 
-          variant="outline"
-          className="w-full"
-        >
-          View Past Analyses
-          <ChevronRight className="ml-2 h-4 w-4" />
-        </Button>
-      </CardFooter>
-    </Card>
+        <div className="text-xs text-gray-500 mt-2">
+          The AI will analyze your journal entries within the selected date range and provide insights about your thoughts and patterns.
+        </div>
+      </div>
+    </div>
   );
 };
+
+import { cn } from "@/lib/utils";
 
 export default JournalAnalysis;
